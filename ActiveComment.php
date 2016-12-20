@@ -44,6 +44,9 @@ class ActiveComment extends Widget
             case 'changyan':
             $realCode = $this->getChangyanCode($code);
             break;
+            case 'xin':
+            $realCode = $this->getXinCode($code);
+            break;
         }
         return $realCode;
     }
@@ -87,6 +90,28 @@ class ActiveComment extends Widget
         $newCode = str_replace("{id}", $this->options['id'], $newCode);
         $newCode = str_replace("{appid}", $this->options['appid'], $newCode);
         $newCode = str_replace("{conf}", $this->options['conf'], $newCode);
+        return $newCode;
+    }
+
+    /**
+     * 处理自定义模版
+     * <?php $abc = ActiveComment::begin([
+            'type' => 'xin',
+            'options' => [
+                'id' => 1,
+                'title' => '测试',
+                'url' => 'http://www.baidu.com',
+            ],
+        ]); ?>
+        <?php ActiveComment::end(); ?>
+     */
+    public function getXinCode($code){
+        $newCode = $code;
+        $newCode = str_replace("{id}", $this->options['id'], $newCode);
+        $newCode = str_replace("{title}", $this->options['title'], $newCode);
+        $newCode = str_replace("{url}", $this->options['url'], $newCode);
+        $newCode = str_replace("{list_path}", $this->options['list_path'], $newCode);
+        $newCode = str_replace("{submit_path}", $this->options['submit_path'], $newCode);
         return $newCode;
     }
 }
